@@ -23,7 +23,6 @@ export default function PlantSave() {
   const navigation = useNavigation();
 
   function handleChangeTime(_: Event, dateTime: Date | undefined) {
-    console.log('Data aqui:', dateTime);
     if (Platform.OS === 'android') setShowDatePicker((oldState) => !oldState);
     if (dateTime && isBefore(dateTime, new Date())) {
       setSelectedDateTime(new Date());

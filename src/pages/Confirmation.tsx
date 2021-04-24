@@ -1,5 +1,5 @@
 import { useNavigation, useRoute } from '@react-navigation/core';
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import Button from '../components/Button';
 import colors from '../styles/colors';
@@ -18,7 +18,11 @@ const emojis = {
   smile: '😁',
 };
 
-export default function Confirmation() {
+interface ConfirmationProps {
+  setHasOnboarded?: Dispatch<SetStateAction<boolean>>;
+}
+
+export default function Confirmation({ setHasOnboarded }: ConfirmationProps) {
   const navigation = useNavigation();
   const routes = useRoute();
 
@@ -31,6 +35,7 @@ export default function Confirmation() {
   } = routes.params as Props;
 
   function handleNextScreen() {
+    if (setHasOnboarded !== undefined) setHasOnboarded(true);
     navigation.navigate(nextScreen);
   }
 

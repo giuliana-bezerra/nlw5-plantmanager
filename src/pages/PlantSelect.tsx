@@ -94,7 +94,7 @@ export function PlantSelect() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Header />
+      <Header texto1="Olá" />
       <Text style={styles.title}>Em qual ambiente</Text>
       <Text style={styles.subTitle}>você quer colocar sua planta?</Text>
       <View>
@@ -148,7 +148,6 @@ const styles = StyleSheet.create({
     color: colors.heading,
     fontFamily: fonts.heading,
     lineHeight: 23,
-    marginTop: 15,
   },
   subTitle: {
     fontFamily: fonts.text,

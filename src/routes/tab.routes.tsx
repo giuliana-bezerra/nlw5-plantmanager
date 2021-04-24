@@ -1,13 +1,13 @@
-import React from 'react';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import colors from '../styles/colors';
-import { PlantSelect } from '../pages/PlantSelect';
 import { MaterialIcons } from '@expo/vector-icons';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import React from 'react';
 import { MyPlants } from '../pages/MyPlants';
+import { PlantSelect } from '../pages/PlantSelect';
+import colors from '../styles/colors';
 
 const { Navigator, Screen } = createBottomTabNavigator();
 
-const AuthRoutes = () => {
+const TabRoutes = () => {
   return (
     <Navigator
       tabBarOptions={{
@@ -15,8 +15,7 @@ const AuthRoutes = () => {
         inactiveTintColor: colors.heading,
         labelPosition: 'beside-icon',
         style: {
-          paddingVertical: 10,
-          height: 88,
+          height: 60,
         },
       }}
     >
@@ -50,4 +49,4 @@ const AuthRoutes = () => {
   );
 };
 
-export default AuthRoutes;
+export default TabRoutes;
