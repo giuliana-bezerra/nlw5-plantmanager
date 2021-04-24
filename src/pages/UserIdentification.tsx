@@ -1,16 +1,18 @@
 import { useNavigation } from '@react-navigation/core';
 import React, { useState } from 'react';
 import {
+  Alert,
+  Keyboard,
+  KeyboardAvoidingView,
+  Platform,
   SafeAreaView,
   StyleSheet,
   Text,
   TextInput,
-  View,
-  KeyboardAvoidingView,
   TouchableWithoutFeedback,
-  Platform,
-  Keyboard,
+  View,
 } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import Button from '../components/Button';
 import colors from '../styles/colors';
 import fonts from '../styles/fonts';
@@ -19,10 +21,27 @@ export default function UserIdentification() {
   const [isFocused, setIsFocused] = useState(false);
   const [isFilled, setIsFilled] = useState(false);
   const [name, setName] = useState<string>();
+  const [error, setError] = useState(false);
   const navigation = useNavigation();
 
-  function handleSubmit() {
-    navigation.navigate('Confirmation');
+  async function handleSubmit() {
+    if (!name) setError(true);
+    else {
+      setError(false);
+      try {
+        await AsyncStorage.setItem('@plantmanager:user', name);
+        navigation.navigate('Confirmation', {
+          title: 'Prontinho',
+          subtitle:
+            'Agora vamos começar a cuidar das suas plantinhas com muito cuidado.',
+          buttonTitle: 'Começar',
+          icon: 'smile',
+          nextScreen: 'PlantSelect',
+        });
+      } catch {
+        Alert.alert('Não foi possível salver o seu nome. 😭');
+      }
+    }
   }
 
   function handleInputBlur() {
@@ -56,7 +75,9 @@ export default function UserIdentification() {
               <TextInput
                 style={[
                   styles.input,
-                  (isFocused || isFilled) && { borderColor: colors.green },
+                  isFocused || isFilled
+                    ? { borderColor: colors.green }
+                    : error && { borderColor: colors.red },
                 ]}
                 placeholder="Digite um nome"
                 onBlur={handleInputBlur}
